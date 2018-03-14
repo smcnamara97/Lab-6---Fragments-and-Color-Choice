@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">PaletteActivity3</string>
+
+
+    <string-array name="colors">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Grey</item>
+    </string-array>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
