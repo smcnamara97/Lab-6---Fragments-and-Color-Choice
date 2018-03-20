@@ -15,6 +15,7 @@ public class PaletteFragment extends Fragment {
 
 
     static final String[] color_array = {"Red", "Blue", "Yellow", "Green", "Gray"};
+    PaletteInterface message;
 
     public PaletteFragment() {
         //Need an empty constructer
@@ -48,7 +49,8 @@ public class PaletteFragment extends Fragment {
                 //Set text_color to the color that we chose
                 String text_color = PaletteFragment.color_array[position];
                 //Send out the message
-                ((PaletteInterface) getActivity()).message(text_color);
+                message.onColorChosen(position);
+
             }
         });
         return layout;
@@ -56,8 +58,9 @@ public class PaletteFragment extends Fragment {
 
 
     public interface PaletteInterface {
-        void message(String color);
+        void onColorChosen(int position);
 
     }
 
 }
+

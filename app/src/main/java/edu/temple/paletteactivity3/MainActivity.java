@@ -3,7 +3,8 @@ package edu.temple.paletteactivity3;
 //Stuff to import
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 
 /**
  * Created by seanmcnamara on 3/13/18.
@@ -13,31 +14,40 @@ import android.app.Fragment;
 public class MainActivity extends AppCompatActivity implements PaletteFragment.PaletteInterface{
     //Make a global CanvasFragment
     CanvasFragment canvas_frag;
+    static final String[] color_array = {"Red", "Blue", "Yellow", "Green", "Gray"};
+    //Boolean to check if we have to fragments
+    boolean two_frags;
 
     //onCreate Method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //We want to check if we have the canvas_fragment
+        two_frags = (findViewById(R.id.canvas_fragment) != null);
+        //Make fragment manager
+        FragmentManager fm = getFragmentManager();
+        //We beging our transaction
+        FragmentTransaction ft = fm.beginTransaction();
+        //add our palette_fragment
+        ft.add(R.id.palette_fragment, new PaletteFragment());
+        //commit
+        ft.commit();
 
-        //new CanvasFragment called canvas_frag
-        canvas_frag = new CanvasFragment();
-        //We will make our first frag our palette fragment
-        add_frag(new PaletteFragment(), R.id.frag_one);
-        //Then make our second fragment the canvas fragment
-        add_frag(canvas_frag, R.id.frag_two);
     }
 
-    //Made a function that will add a fragment, takes in the frag and the id of container
-    private void add_frag(Fragment frag, int id) {
-        getFragmentManager().beginTransaction().replace(id, frag).commit();
-    }
-
-    //Function to set the color on the canvas fragment to the color that is chosen.
     @Override
-    public void message(String color) {
-        canvas_frag.setColor(color);
+    public void onColorChosen(int position) {
+        if(two_frags) {
+            canvas_frag.setColor(color_array[position]);
+        } else {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.palette_fragment, new CanvasFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
+
 
 
 }

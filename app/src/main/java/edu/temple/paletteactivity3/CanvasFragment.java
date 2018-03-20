@@ -35,3 +35,4 @@ public class CanvasFragment extends Fragment {
     }
 
 }
+
